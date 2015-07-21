@@ -103,7 +103,6 @@ describe('Node Server Request Listener Function', function() {
     expect(res._ended).to.equal(true);
   });
 
-
   it('Should 404 when asked for a nonexistent file', function() {
     var req = new stubs.request('/arglebargle', 'GET');
     var res = new stubs.response();
@@ -112,7 +111,9 @@ describe('Node Server Request Listener Function', function() {
 
     // Wait for response to return and then check status code
     waitForThen(
-      function() { return res._ended; },
+      function() {
+        return res._ended;
+      },
       function() {
         expect(res._responseCode).to.equal(404);
     });
