@@ -8,6 +8,7 @@ $(document).ready(function(){
   var getData = function(roomName){
     return $.ajax({
       url: "https://api.parse.com/1/classes/chatterbox",
+      // url: "http://127.0.0.1:3000",
       type: 'GET',
       contentType: 'application/json',
       success: function(data) {
