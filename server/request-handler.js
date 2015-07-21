@@ -61,16 +61,30 @@ var requestHandler = function(request, response) {
   // ***
   // OUR NEW HANDLER CODE
   // ***
-  // this.db = [];
-
   if (request.method === 'GET' && request.url === '/classes/room1') {
     response.end(JSON.stringify({results: _db}));
-  }
 
-  if (request.method === 'POST' && request.url === '/classes/room1') {
+  } else if (request.method === 'POST' && request.url === '/classes/room1') {
     response.writeHead(201, headers);
     _db.push(request._postData);
     response.end(JSON.stringify(_db[_db.length - 1]));
+
+  } else if (request.method === 'GET' && request.url === '/classes/messages') {
+    response.end(JSON.stringify({results: _db}));
+
+  } else if (request.method === 'POST' && request.url === '/classes/messages') {
+    response.writeHead(201, headers);
+    request.on('data', function(chunk){
+      _db.push(JSON.parse(chunk.toString()));
+    });
+
+    request.on('end', function(){
+      response.end(JSON.stringify(_db[0]));
+    });
+
+  } else {
+    response.writeHead(404, headers);
+    response.end();
   }
 };
 
