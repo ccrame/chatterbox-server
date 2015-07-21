@@ -11,6 +11,7 @@ this file and include it in basic-server.js so that it actually works.
 *Hint* Check out the node module documentation at http://nodejs.org/api/modules.html.
 
 **************************************************************/
+var _db = [];
 
 var requestHandler = function(request, response) {
   // Request and Response come from node's http module.
@@ -27,7 +28,7 @@ var requestHandler = function(request, response) {
   // Adding more logging to your server can be an easy way to get passive
   // debugging help, but you should always be careful about leaving stray
   // console.logs in your code.
-  console.log("Serving request type " + request.method + " for url " + request.url);
+  // console.log("Serving request type " + request.method + " for url " + request.url);
 
   // The outgoing status.
   var statusCode = 200;
@@ -52,7 +53,25 @@ var requestHandler = function(request, response) {
   //
   // Calling .end "flushes" the response's internal buffer, forcing
   // node to actually send all the data over to the client.
-  response.end("Hello, World!");
+  // response.end("Hello, World!");
+
+
+
+
+  // ***
+  // OUR NEW HANDLER CODE
+  // ***
+  // this.db = [];
+
+  if (request.method === 'GET' && request.url === '/classes/room1') {
+    response.end(JSON.stringify({results: _db}));
+  }
+
+  if (request.method === 'POST' && request.url === '/classes/room1') {
+    response.writeHead(201, headers);
+    _db.push(request._postData);
+    response.end(JSON.stringify(_db[_db.length - 1]));
+  }
 };
 
 // These headers will allow Cross-Origin Resource Sharing (CORS).
