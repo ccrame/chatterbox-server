@@ -1,13 +1,15 @@
 $(document).ready(function(){
   // GLOBAL VARIABLE TO PERSIST FRIENDS
   var friends = [];
+  var parseURL = "https://api.parse.com/1/classes/chatterbox";
+  var localServer = "http://127.0.0.1:3000/classes/chatterbox";
 
   /*
     DATABASE INTERACTION FUNCTIONS
   */
   var getData = function(roomName){
     return $.ajax({
-      url: "https://api.parse.com/1/classes/chatterbox",
+      url: localServer,
       // url: "http://127.0.0.1:3000",
       type: 'GET',
       contentType: 'application/json',
@@ -25,7 +27,7 @@ $(document).ready(function(){
 
   var postMessage = function(message) {
     $.ajax({
-      url: "https://api.parse.com/1/classes/chatterbox",
+      url: localServer,
       type: 'POST',
       data: JSON.stringify(message),
       contentType: 'application/json',
